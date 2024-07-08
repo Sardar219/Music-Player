@@ -17,7 +17,7 @@ Welcome to the Music Player web interface you can play music on your device with
 - Bootstrap5
 - javascript
 
-<b>[Live Demo](https://sardar219.github.io/Login-Form2/)</b>
+<b>[Live Demo](https://sardar219.github.io/Music-Player/)</b>
 
 ## My Contact
 
