@@ -10,15 +10,15 @@ let prev_btn = document.querySelector(".prev-track");
 let seek_slider = document.querySelector(".seek_slider");
 let volume_slider = document.querySelector(".volume_slider");
 let curr_time = document.querySelector(".current-time");
-let total_duration = document.querySelector(".wave");
+let total_duration = document.querySelector(".total-duration");
+let wave = document.getElementById("wave");
 let randomIcon = document.querySelector(".fa-random");
-let curr_track = document.querySelector(".audio");
+let curr_track = document.createElement("audio");
 
 let track_index = 0;
 let isPlaying = false;
 let isRandom = false;
 let updateTimer;
-
 const music_list = [
   {
     img: "image/image1.jpg",
@@ -51,7 +51,6 @@ const music_list = [
     music: "music/music5.mp3",
   },
 ];
-loadTrack(track_index);
 
 function loadTrack(track_index) {
   clearInterval(updateTimer);
@@ -59,7 +58,8 @@ function loadTrack(track_index) {
 
   curr_track.src = music_list[track_index].music;
   curr_track.load();
-  track_art.style.backgroundImage = "url(" + music_list[track_index].img + ")";
+  track_art.style.backgroundImage =
+    "url('" + music_list[track_index].img + "')";
   track_name.textContent = music_list[track_index].name;
   track_artist.textContent = music_list[track_index].artist;
   now_playing.textContent =
@@ -68,7 +68,7 @@ function loadTrack(track_index) {
   updateTimer = setInterval(setUpdate, 1000);
   curr_track.addEventListener("ended", nextTrack);
 }
-
+loadTrack(track_index);
 function random_bg_color() {
   let hex = [
     "0",
@@ -103,4 +103,7 @@ function random_bg_color() {
 
   let gradient = "linear-gradient(" + angle + "," + Color1 + "," + Color2 + ")";
   document.body.style.background = gradient;
+}
+function reset() {
+  curr_time.textContent = "00:00";
 }
