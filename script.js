@@ -106,4 +106,60 @@ function random_bg_color() {
 }
 function reset() {
   curr_time.textContent = "00:00";
+  total_duration.textContent = "00:00";
+  seek_slider.value = 0;
+}
+function randomTrack() {
+  isRandom ? pauseRandom() : playRandom();
+}
+function playRandom() {
+  isRandom = true;
+  randomIcon.classList.add("randomActive");
+}
+function pauseRandom() {
+  isRandom = false;
+  randomIcon.classList.remove("randomActive");
+}
+function repeatTrack() {
+  let current_index = track_index;
+  loadTrack(current_index);
+  playTrack();
+}
+function playpauseTrack() {
+  isPlaying ? pauseTrack() : playTrack();
+}
+function playTrack() {
+  curr_track.play();
+  isPlaying = true;
+  track_art.classList.add("rotate");
+  wave.classList.add("loader");
+  playpause_btn.innerHTML = '<i class="fa-solid fa-circle-pause fa-4x"></i>';
+}
+function pauseTrack() {
+  curr_track.pause();
+  isPlaying = false;
+  track_art.classList.remove("rotate");
+  wave.classList.remove("loader");
+  playpause_btn.innerHTML = '<i class="fa-solid fa-circle-play fa-4x"></i>';
+}
+function nextTrack() {
+  if (track_index < music_list.length - 1 && isRandom === false) {
+    track_index += 1;
+  } else if (track_index < music_list.length - 1 && isRandom === true) {
+    let random_index = Number.parseInt(Math.random * music_list.length);
+    track_index = random_index;
+  } else {
+    track_index = 0;
+  }
+  loadTrack(track_index);
+  playTrack();
+}
+function pervTrack() {
+  if (track_index > 0) {
+    track_index -= 1;
+  } else {
+    track_index = music_list.length - 1;
+  }
+  loadTrack(track_index);
+  playTrack();
 }
