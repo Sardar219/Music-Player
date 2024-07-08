@@ -67,6 +67,7 @@ function loadTrack(track_index) {
 
   updateTimer = setInterval(setUpdate, 1000);
   curr_track.addEventListener("ended", nextTrack);
+  random_bg_color();
 }
 loadTrack(track_index);
 function random_bg_color() {
@@ -101,8 +102,8 @@ function random_bg_color() {
   let Color2 = populate("#");
   var angle = "to right";
 
-  let gradient = "linear-gradient(" + angle + "," + Color1 + "," + Color2 + ")";
-  document.body.style.background = gradient;
+  document.body.style.background =
+    "linear-gradient(" + angle + "," + Color1 + "," + Color2 + ")";
 }
 function reset() {
   curr_time.textContent = "00:00";
@@ -162,4 +163,41 @@ function pervTrack() {
   }
   loadTrack(track_index);
   playTrack();
+}
+function seekTo() {
+  let seekto = curr_track.duration * (seek_slider.value / 100);
+  curr_track.currentTime = seekto;
+}
+function setVolume() {
+  curr_track.volume = volume_slider.value / 100;
+}
+function setUpdate() {
+  let seekPosition = 0;
+  if (!isNaN(curr_track.duration)) {
+    seekPosition = curr_track.currentTime * (100 / curr_track.duration);
+    seek_slider.value = seekPosition;
+
+    let currentMinutes = Math.floor(curr_track.currentTime / 60);
+    let currSeconds = Math.floor(curr_track.currentTime - currentMinutes * 60);
+    let durationMinutes = Math.floor(curr_track.duration / 60);
+    let durationSeconds = Math.floor(
+      curr_track.duration - durationMinutes * 60
+    );
+
+    if (currSeconds < 10) {
+      currSeconds = "0" + currSeconds;
+    }
+    if (durationSeconds < 10) {
+      durationSeconds = "0" + durationSeconds;
+    }
+    if (currentMinutes < 10) {
+      currentMinutes = "0" + currentMinutes;
+    }
+    if (durationMinutes < 10) {
+      durationMinutes = "0" + durationMinutes;
+    }
+
+    curr_time.textContent = currentMinutes + ":" + currSeconds;
+    total_duration.textContent = durationMinutes + ":" + durationSeconds;
+  }
 }
